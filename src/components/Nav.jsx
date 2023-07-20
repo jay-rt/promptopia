@@ -10,11 +10,11 @@ const Nav = () => {
   const [menuToggle, setMenuToggle] = useState(false);
 
   useEffect(() => {
-    const getSetProviders = async () => {
+    const setUpProviders = async () => {
       const res = await getProviders();
       setProviders(res);
     };
-    getSetProviders();
+    setUpProviders();
   }, []);
 
   const isUserLoggedIn = true;
