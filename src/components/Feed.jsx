@@ -46,7 +46,7 @@ const Feed = () => {
           ? error.message
           : isLoading
           ? "loading"
-          : data.map((prompt) => <PromptCard key={prompt._id} />)}
+          : data.map((post) => <PromptCard key={post._id} post={post} />)}
       </div>
     </section>
   );
