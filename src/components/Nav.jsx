@@ -41,7 +41,7 @@ const Nav = () => {
             <button type="button" className="outline_btn" onClick={signOut}>
               Sign Out
             </button>
-            <Link href="/profile">
+            <Link href={`/profile/${session?.user.id}`}>
               <Image
                 src={session?.user.image}
                 alt="profile"
@@ -83,7 +83,7 @@ const Nav = () => {
             {menuToggle && (
               <div className="dropdown">
                 <Link
-                  href="/profile"
+                  href={`/profile/${session?.user.id}`}
                   className="dropdown_link"
                   onClick={() => setMenuToggle(false)}
                 >

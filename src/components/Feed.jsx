@@ -1,33 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import useSWR from "swr";
 import PromptCard from "./PromptCard";
+import { useSession } from "next-auth/react";
+import useData from "@/hooks/useData";
 
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
+  const { data: session } = useSession();
 
   const handleChange = (e) => {
     setSearchText(e.target.value);
   };
 
-  const fetchPrompts = async (url) => {
-    const res = await fetch(url);
-
-    if (!res.ok) {
-      // Attach extra info to the error object.
-      res.status === 404
-        ? (error.message =
-            "404: The resources that you are looking for doesn't exist")
-        : (error.message = await res.text());
-      error.status = res.status;
-      throw error;
-    }
-
-    return res.json();
-  };
-
-  const { data, error, isLoading } = useSWR("/api/prompt", fetchPrompts);
+  const { data, error, isLoading } = useData(session ? "/api/prompt" : null);
 
   return (
     <section className="feed">
@@ -41,13 +27,17 @@ const Feed = () => {
           className="search_input peer"
         />
       </form>
-      <div className="mt-16 prompt_layout">
-        {error
-          ? error.message
-          : isLoading
-          ? "loading"
-          : data.map((post) => <PromptCard key={post._id} post={post} />)}
-      </div>
+
+      {/** Only display prompts if user is logged in */}
+      {session && (
+        <div className="mt-16 prompt_layout">
+          {error
+            ? error.message
+            : isLoading
+            ? "loading"
+            : data.map((post) => <PromptCard key={post._id} post={post} />)}
+        </div>
+      )}
     </section>
   );
 };

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-const PromptCard = ({ post }) => {
+const PromptCard = ({ post, user }) => {
   const [copied, setCopied] = useState(false);
   const handleCopy = () => {
     setCopied(true);
@@ -16,7 +16,7 @@ const PromptCard = ({ post }) => {
       <div className="flex justify-between items-start gap-5">
         <div className="flex-1 flex justify-start items-center  gap-3 cursor-pointer">
           <Image
-            src={post.userId.image}
+            src={user ? user.image : post.userId.image}
             alt="user_image"
             width={48}
             height={48}
@@ -24,10 +24,10 @@ const PromptCard = ({ post }) => {
           />
           <div className="flex flex-col">
             <h3 className="font-satoshi font-semibold text-gray-900">
-              {post.userId.username}
+              {user ? user.username : post.userId.username}
             </h3>
             <p className="font-inter text-sm text-gray-500">
-              {post.userId.email}
+              {user ? user.email : post.userId.email}
             </p>
           </div>
         </div>

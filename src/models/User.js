@@ -13,6 +13,7 @@ const userSchema = new Schema(
       required: [true, "Username is required!"],
     },
     image: String,
+    fullname: { type: String, required: [true, "Full name is required"] },
   },
   { timestamps: true }
 );
