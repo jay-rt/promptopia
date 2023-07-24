@@ -1,15 +1,21 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 
 const PromptCard = ({ post, user }) => {
   const [copied, setCopied] = useState(false);
+  const { data: session } = useSession();
+
   const handleCopy = () => {
     setCopied(true);
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(false), 3000);
   };
+
+  const handleEdit = () => {};
+  const handleDelete = () => {};
 
   return (
     <div className="prompt_card">
@@ -44,6 +50,22 @@ const PromptCard = ({ post, user }) => {
       <p className="font-inter text-sm blue_gradient cursor-pointer">
         {post.tag}
       </p>
+      {user && session && (
+        <div className="mt-5 flex justify-between items-center gap-4 border-t border-gray-200 pt-3">
+          <button
+            type="button"
+            className="font-inter text-sm green_gradient cursor-pointer"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            className="font-inter text-sm orange_gradient cursor-pointer"
+          >
+            Delete
+          </button>
+        </div>
+      )}
     </div>
   );
 };
