@@ -11,10 +11,10 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session }) {
-      //storing user id from MongoDB to session
-      const sessionUser = await User.findOne({ email: session.user.email });
-      session.user.id = sessionUser._id.toString();
+    async session({ session, token }) {
+      //storing user id from JWT token to session
+      session.accessToken = token.accessToken;
+      session.user.id = token.id.toString();
       return session;
     },
     async signIn({ profile }) {
@@ -40,6 +40,15 @@ const handler = NextAuth({
         console.log(error);
         return false;
       }
+    },
+    async jwt({ token, account, user }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        const signedInUser = await User.findOne({ email: user.email });
+        token.accessToken = account.access_token;
+        token.id = signedInUser._id;
+      }
+      return token;
     },
   },
 });

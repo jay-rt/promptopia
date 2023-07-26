@@ -2,11 +2,13 @@
 
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const PromptCard = ({ post, user }) => {
   const [copied, setCopied] = useState(false);
   const { data: session } = useSession();
+  const router = useRouter();
 
   const handleCopy = () => {
     setCopied(true);
@@ -14,7 +16,9 @@ const PromptCard = ({ post, user }) => {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    router.push(`/edit?id=${post._id}`);
+  };
   const handleDelete = () => {};
 
   return (
@@ -55,6 +59,7 @@ const PromptCard = ({ post, user }) => {
           <button
             type="button"
             className="font-inter text-sm green_gradient cursor-pointer"
+            onClick={handleEdit}
           >
             Edit
           </button>

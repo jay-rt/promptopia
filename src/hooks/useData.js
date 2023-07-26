@@ -6,10 +6,8 @@ const useData = (key) => {
 
     if (!res.ok) {
       // Attach extra info to the error object.
-      res.status === 404
-        ? (error.message =
-            "404: The resources that you are looking for doesn't exist")
-        : (error.message = await res.text());
+      const error = new Error();
+      error.message = await res.text();
       error.status = res.status;
       throw error;
     }
