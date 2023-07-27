@@ -13,7 +13,7 @@ const Feed = () => {
     setSearchText(e.target.value);
   };
 
-  const { data, error, isLoading } = useData(session ? "/api/prompt" : null);
+  const { data, error, isLoading } = useData(session ? "/api/prompts" : null);
 
   return (
     <section className="feed">

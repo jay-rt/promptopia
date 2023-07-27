@@ -6,8 +6,8 @@ import { useSession } from "next-auth/react";
 
 const Profile = ({ params }) => {
   const { data: session } = useSession();
-  const user = useData(`/api/user/${params.id}`);
-  const posts = useData(() => `/api/user/${user.data._id}/posts`);
+  const user = useData(`/api/users/${params.id}`);
+  const posts = useData(() => `/api/users/${user.data._id}/posts`);
 
   //splitting full name to get first name
   const firstname = user?.data?.fullname.split(" ")[0];
