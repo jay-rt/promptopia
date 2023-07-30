@@ -54,7 +54,7 @@ const PromptCard = ({ post, user }) => {
       <p className="font-inter text-sm blue_gradient cursor-pointer">
         #{post.tag}
       </p>
-      {user && session && (
+      {session.user.id === user?._id && (
         <div className="mt-5 flex justify-between items-center gap-4 border-t border-gray-200 pt-3">
           <button
             type="button"

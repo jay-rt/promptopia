@@ -44,6 +44,7 @@ const handler = NextAuth({
     async jwt({ token, account, user }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
+        await connectToDb();
         const signedInUser = await User.findOne({ email: user.email });
         token.accessToken = account.access_token;
         token.id = signedInUser._id;

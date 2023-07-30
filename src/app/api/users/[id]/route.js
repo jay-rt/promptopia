@@ -1,13 +1,7 @@
 import User from "@/models/User";
 import connectToDb from "@/utils/database";
-import { getToken } from "next-auth/jwt";
 
 export const GET = async (req, { params }) => {
-  const token = await getToken({ req });
-  if (!token)
-    return new Response("You are not authorized to view this page", {
-      status: 401,
-    });
   try {
     await connectToDb();
     const user = await User.findById(params.id);
