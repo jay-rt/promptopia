@@ -1,15 +1,12 @@
 import useSWR from "swr";
+import handleError from "@/utils/handleError";
 
 const useData = (key) => {
   const fetchData = async (url) => {
     const res = await fetch(url);
 
     if (!res.ok) {
-      // Attach extra info to the error object.
-      const error = new Error();
-      error.message = await res.text();
-      error.status = res.status;
-      throw error;
+      await handleError(res);
     }
 
     return res.json();
