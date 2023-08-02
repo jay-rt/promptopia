@@ -7,9 +7,7 @@ export const metadata = {
 
 const CreatePost = () => {
   const post = { prompt: "", tag: "" };
-  return (
-    <Form type="Create" post={post} swrKey={"/api/prompts"} method="POST" />
-  );
+  return <Form type="Create" post={post} swrKey="/api/prompts" method="POST" />;
 };
 
 export default CreatePost;

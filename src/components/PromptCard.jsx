@@ -1,9 +1,11 @@
 "use client";
 
+import handleError from "@/utils/handleError";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { mutate } from "swr";
 
 const PromptCard = ({ post, user }) => {
   const [copied, setCopied] = useState(false);
@@ -17,9 +19,22 @@ const PromptCard = ({ post, user }) => {
   };
 
   const handleEdit = () => {
-    router.push(`/edit?id=${post._id}`);
+    router.push(`/edit/${post._id}`);
   };
-  const handleDelete = () => {};
+
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/prompts/${post._id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) await handleError(res);
+      // mutate("/api/prompts");
+      router.push("/");
+      console.log(await res.text());
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div className="prompt_card">
@@ -66,6 +81,7 @@ const PromptCard = ({ post, user }) => {
           <button
             type="button"
             className="font-inter text-sm orange_gradient cursor-pointer"
+            onClick={handleDelete}
           >
             Delete
           </button>

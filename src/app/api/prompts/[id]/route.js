@@ -8,7 +8,8 @@ export const GET = async (req, { params }) => {
     await connectToDb();
     const prompt = await Prompt.findById(params.id);
     if (!prompt) return new Response("Prompt not found", { status: 404 });
-    if (prompt.userId !== userId)
+    //userId is of type object and userId is an object with the id value stored in value
+    if (prompt.userId.toString() !== userId.value)
       return new Response("You can only edit your post", { status: 401 });
     return new Response(JSON.stringify(prompt), { status: 200 });
   } catch (error) {
@@ -25,7 +26,7 @@ export const PATCH = async (req, { params }) => {
     const existingPrompt = await Prompt.findById(params.id);
     if (!existingPrompt)
       return new Response("Prompt not found", { status: 404 });
-    if (existingPrompt.userId !== userId)
+    if (existingPrompt.userId.toString() !== userId.value)
       //Update the prompt with new data
       existingPrompt.prompt = prompt;
     existingPrompt.tag = tag;
@@ -46,7 +47,7 @@ export const DELETE = async (req, { params }) => {
     const existingPrompt = await Prompt.findById(params.id);
     if (!existingPrompt)
       return new Response("Prompt not found", { status: 404 });
-    if (existingPrompt.userId !== userId)
+    if (existingPrompt.userId.toString() !== userId.value)
       return new Response("You can only delete your post", { status: 401 });
     return new Response("Successfully deleted the post", { status: 200 });
   } catch (error) {

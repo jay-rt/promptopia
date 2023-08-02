@@ -9,7 +9,10 @@ import handleError from "@/utils/handleError";
 
 const Form = ({ type, post, swrKey, method }) => {
   const router = useRouter();
-  const [input, setInput] = useState(post);
+  const [input, setInput] = useState({
+    prompt: post.prompt,
+    tag: post.tag,
+  });
   const { data: session, status } = useSession();
 
   const mutatePost = async (url, { arg }) => {
