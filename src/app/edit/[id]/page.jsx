@@ -20,12 +20,12 @@ import useData from "@/hooks/useData";
 // };
 
 const Edit = ({ params }) => {
-  const { isLoadding, data, error } = useData(`/api/prompts/${params.id}`);
+  const { isLoading, data, error } = useData(`/api/prompts/${params.id}`);
   // const session = await getServerSession(authOptions);
   // const accessToken = session && session.accessToken;
   // const post = await getPost(params.id, accessToken);
 
-  if (isLoadding) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;
 
   return (

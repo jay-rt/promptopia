@@ -8,7 +8,7 @@ export const GET = async (req, { params }) => {
     await connectToDb();
     const prompt = await Prompt.findById(params.id);
     if (!prompt) return new Response("Prompt not found", { status: 404 });
-    //userId is of type object and userId is an object with the id value stored in value
+    //prompt.userId is of type object and userId cookie is an object with its value stored in value field
     if (prompt.userId.toString() !== userId.value)
       return new Response("You can only edit your post", { status: 401 });
     return new Response(JSON.stringify(prompt), { status: 200 });
