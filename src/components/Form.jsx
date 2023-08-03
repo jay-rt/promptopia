@@ -38,7 +38,7 @@ const Form = ({ type, post, swrKey, method }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await trigger({ ...input, id: session.user.id });
+    await trigger({ ...input, userId: session.user.id });
   };
 
   if (status === "loading") return <p>Loading...</p>;
@@ -54,7 +54,6 @@ const Form = ({ type, post, swrKey, method }) => {
         {type} and share amazing prompts with the world, and let your
         imagination run wild with any AI-powered platform
       </p>
-      {error && <p>{error.message}</p>}
       <form
         onSubmit={handleSubmit}
         className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
@@ -84,7 +83,7 @@ const Form = ({ type, post, swrKey, method }) => {
           name="tag"
           value={input.tag}
           onChange={handleChange}
-          placeholder="#tag"
+          placeholder="tag"
           required
           className="form_input"
         />

@@ -5,6 +5,7 @@ import connectToDb from "@/utils/database";
 export const GET = async (req, { params }) => {
   const userId = req.cookies.get("userId");
   try {
+    //connect to database
     await connectToDb();
     const prompt = await Prompt.findById(params.id);
     if (!prompt) return new Response("Prompt not found", { status: 404 });
@@ -19,16 +20,14 @@ export const GET = async (req, { params }) => {
 
 //EDIT POST
 export const PATCH = async (req, { params }) => {
-  const { prompt, tag } = await req.json();
-  const userId = req.cookies.get("userId");
+  const { userId, prompt, tag } = await req.json();
   try {
     await connectToDb();
     const existingPrompt = await Prompt.findById(params.id);
     if (!existingPrompt)
       return new Response("Prompt not found", { status: 404 });
-    if (existingPrompt.userId.toString() !== userId.value)
-      //Update the prompt with new data
-      existingPrompt.prompt = prompt;
+    //Update the prompt with new data
+    existingPrompt.prompt = prompt;
     existingPrompt.tag = tag;
 
     await existingPrompt.save();
@@ -49,6 +48,7 @@ export const DELETE = async (req, { params }) => {
       return new Response("Prompt not found", { status: 404 });
     if (existingPrompt.userId.toString() !== userId.value)
       return new Response("You can only delete your post", { status: 401 });
+    await Prompt.findByIdAndDelete(params.id);
     return new Response("Successfully deleted the post", { status: 200 });
   } catch (error) {
     return new Response("Internal server error", { status: 500 });
