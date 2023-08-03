@@ -19,7 +19,7 @@ const Profile = ({ params }) => {
     error: postsError,
     data: postsData,
     mutate: mutatePosts,
-  } = useData(() => `/api/users/${userData._id}/posts`);
+  } = useData(`/api/users/${params.id}/posts`);
 
   const deletePrompt = async (id) => {
     try {
