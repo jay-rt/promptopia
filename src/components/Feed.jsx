@@ -44,9 +44,11 @@ const Feed = () => {
     setFilteredPost(filter);
   };
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading") return <p className="mt-16">Loading...</p>;
   if (status === "unauthenticated")
-    return <p>Please sign in to create, edit and share prompts!</p>;
+    return (
+      <p className="mt-16">Please sign in to create, edit and share prompts!</p>
+    );
 
   return (
     <section className="feed">
